@@ -2,6 +2,8 @@ package pl.elpepe.equipy.asset;
 
 
 import org.springframework.stereotype.Service;
+import pl.elpepe.equipy.category.Category;
+import pl.elpepe.equipy.category.CategoryRepository;
 
 import java.util.Optional;
 

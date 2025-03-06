@@ -1,4 +1,4 @@
-package pl.elpepe.equipy.asset;
+package pl.elpepe.equipy.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

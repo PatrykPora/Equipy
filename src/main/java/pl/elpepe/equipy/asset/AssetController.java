@@ -1,11 +1,13 @@
 package pl.elpepe.equipy.asset;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,19 @@ public class AssetController {
         } else {
             return assetService.findAll();
         }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<AssetDto> create(@RequestBody AssetDto assetDto) {
+        if (assetDto.getId() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "asset should not have an id");
+        }
+        AssetDto asset = assetService.save(assetDto);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(assetDto.getId()).toUri();
+        return ResponseEntity.created(location).body(asset);
     }
 
 }

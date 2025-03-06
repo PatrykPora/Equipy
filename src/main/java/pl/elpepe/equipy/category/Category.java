@@ -1,7 +1,8 @@
-package pl.elpepe.equipy.asset;
+package pl.elpepe.equipy.category;
 
 
 import jakarta.persistence.*;
+import pl.elpepe.equipy.asset.Asset;
 
 import java.util.HashSet;
 import java.util.Objects;

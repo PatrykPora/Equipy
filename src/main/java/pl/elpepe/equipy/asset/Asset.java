@@ -2,6 +2,7 @@ package pl.elpepe.equipy.asset;
 
 
 import jakarta.persistence.*;
+import pl.elpepe.equipy.category.Category;
 
 import java.util.Objects;
 

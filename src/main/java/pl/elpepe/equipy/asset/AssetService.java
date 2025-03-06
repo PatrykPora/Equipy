@@ -3,6 +3,7 @@ package pl.elpepe.equipy.asset;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,14 @@ public class AssetService {
                 .stream()
                 .map(assetMapper::toDto)
                 .toList();
+    }
+
+    AssetDto save(AssetDto assetDto) {
+        Optional<Asset> assetBySerialNumber = assetRepository.findBySerialNumber(assetDto.getSerialNumber());
+        assetBySerialNumber.ifPresent(asset -> {throw new DuplicatedSerialNumberException();});
+        Asset assetEntity  = assetMapper.toEntity(assetDto);
+        Asset savedAsset = assetRepository.save(assetEntity);
+        return assetMapper.toDto(savedAsset);
     }
 
 
