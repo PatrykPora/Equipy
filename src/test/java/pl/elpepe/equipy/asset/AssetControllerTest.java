@@ -27,4 +27,14 @@ class AssetControllerTest {
                 .andExpect(jsonPath("$.length()").value(10))
                 .andDo(print());
     }
+
+    @Test
+    public void shouldFindAssetByNameOrSerialNumber() throws Exception {
+
+        mockMvc.perform(get("/api/assets").param("text","apP"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.length()").value(3))
+                .andDo(print());
+    }
 }
