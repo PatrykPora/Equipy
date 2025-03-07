@@ -9,8 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -92,4 +91,71 @@ class AssetControllerTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+
+    @Test
+    public void shouldGetAssetById() throws Exception {
+        mockMvc.perform(get("/api/assets/1"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldNotFindAssetWithWrongId() throws Exception {
+        mockMvc.perform(get("/api/assets/198873"))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
+    @DirtiesContext
+    public void shouldUpdateExistingAsset() throws Exception {
+        AssetDto assetDtoToUpdate = new AssetDto();
+        assetDtoToUpdate.setId(1L);
+        assetDtoToUpdate.setSerialNumber("123FortestSerialNumber");
+        assetDtoToUpdate.setDescription("description test asset");
+        assetDtoToUpdate.setName("test asset");
+        assetDtoToUpdate.setCategory("Laptopy");
+
+        mockMvc.perform(put("/api/assets/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(assetDtoToUpdate)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.name").value("test asset"))
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldNotUpdateExistingAssetWithWrongId() throws Exception {
+        AssetDto assetDtoToUpdate = new AssetDto();
+        assetDtoToUpdate.setId(1L);
+        assetDtoToUpdate.setSerialNumber("123FortestSerialNumber");
+        assetDtoToUpdate.setDescription("description test asset");
+        assetDtoToUpdate.setName("test asset");
+        assetDtoToUpdate.setCategory("Laptopy");
+
+        mockMvc.perform(put("/api/assets/5")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(assetDtoToUpdate)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldNotUpdateAssetIfSerialNumberIsDuplicated() throws Exception {
+        AssetDto assetDtoToUpdate = new AssetDto();
+        assetDtoToUpdate.setId(1L);
+        assetDtoToUpdate.setSerialNumber("DI3576XO526716");
+        assetDtoToUpdate.setDescription("description test asset");
+        assetDtoToUpdate.setName("test asset");
+        assetDtoToUpdate.setCategory("Laptopy");
+
+        mockMvc.perform(put("/api/assets/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(assetDtoToUpdate)))
+                .andExpect(status().isConflict())
+                .andDo(print());
+    }
+
 }

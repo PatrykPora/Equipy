@@ -43,5 +43,21 @@ public class AssetController {
         return ResponseEntity.created(location).body(asset);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AssetDto> findById(@PathVariable Long id) {
+        return assetService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AssetDto> update(@PathVariable Long id, @RequestBody AssetDto assetDto) {
+        if (!id.equals(assetDto.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id should be equal to id");
+        }
+        AssetDto updatedAsset = assetService.update(assetDto);
+        return ResponseEntity.ok(updatedAsset);
+    }
+
 }
 
