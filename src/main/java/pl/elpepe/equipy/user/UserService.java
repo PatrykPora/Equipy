@@ -1,6 +1,7 @@
 package pl.elpepe.equipy.user;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,5 +58,15 @@ public class UserService {
 
     Optional<UserDto> findByID(Long id) {
         return userRepository.findById(id).map(UserMapper::toUserDto);
+    }
+
+    @Transactional
+    List<UserAssignmentDto> getUserAssignments(Long userId) {
+        return userRepository.findById(userId)
+                .map(User::getAssignments)
+                .orElseThrow(UserNotFoundException::new)
+                .stream()
+                .map(UserAssignmentMapper::toDto)
+                .toList();
     }
 }

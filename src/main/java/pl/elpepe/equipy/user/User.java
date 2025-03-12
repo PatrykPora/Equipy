@@ -2,6 +2,10 @@ package pl.elpepe.equipy.user;
 
 
 import jakarta.persistence.*;
+import pl.elpepe.equipy.assigment.Assignment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +19,9 @@ public class User {
 
     @Column(unique = true)
     private String pesel;
+
+    @OneToMany(mappedBy = "user")
+    private List<Assignment> assignments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -46,5 +53,13 @@ public class User {
 
     public void setPesel(String pesel) {
         this.pesel = pesel;
+    }
+
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments = assignments;
     }
 }

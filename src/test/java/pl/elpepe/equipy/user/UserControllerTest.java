@@ -146,4 +146,21 @@ class UserControllerTest {
                 .andDo(print());
     }
 
+
+    @Test
+    public void shouldGetUserAssignments() throws Exception {
+        mockMvc.perform(get("/api/users/1/assignments"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$[0].assetName").value("Asus MateBook D"))
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldThrowUserNotFoundExceptionWhenTryToGetAssignmentsForNonExistingUser() throws Exception {
+        mockMvc.perform(get("/api/users/500/assignments"))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
 }
