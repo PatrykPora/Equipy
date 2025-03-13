@@ -2,8 +2,10 @@ package pl.elpepe.equipy.asset;
 
 
 import jakarta.persistence.*;
+import pl.elpepe.equipy.assigment.Assignment;
 import pl.elpepe.equipy.category.Category;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,17 @@ public class Asset {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "asset")
+    private List<Assignment> assignments;
+
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments = assignments;
+    }
 
     public Long getId() {
         return id;

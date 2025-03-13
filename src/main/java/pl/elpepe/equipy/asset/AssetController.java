@@ -1,6 +1,7 @@
 package pl.elpepe.equipy.asset;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,12 @@ public class AssetController {
         }
         AssetDto updatedAsset = assetService.update(assetDto);
         return ResponseEntity.ok(updatedAsset);
+    }
+
+    @Transactional
+    @GetMapping("/{assetId}/assignments")
+    public List<AssetAssignmentDto> getAssetAssignments(@PathVariable Long assetId) {
+        return assetService.getAssetAssignments(assetId);
     }
 
 }

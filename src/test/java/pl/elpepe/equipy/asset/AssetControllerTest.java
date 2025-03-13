@@ -158,4 +158,20 @@ class AssetControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void shouldGetAssignmentsForAssetWithProperId() throws Exception {
+       mockMvc.perform(get("/api/assets/1/assignments"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$[0].id").value(1))
+               .andExpect(jsonPath("$[0].firstName").value("jan"))
+               .andDo(print());
+    }
+
+    @Test
+    public void shouldNotGetAssignmentsForAssetWithWrongId() throws Exception {
+        mockMvc.perform(get("/api/assets/500/assignments"))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
 }
