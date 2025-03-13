@@ -14,8 +14,8 @@ public class Assignment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime startRentTime;
-    private LocalDateTime endRentTime;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,20 +34,20 @@ public class Assignment {
         this.id = id;
     }
 
-    public LocalDateTime getStartRentTime() {
-        return startRentTime;
+    public LocalDateTime getStart() {
+        return start;
     }
 
-    public void setStartRentTime(LocalDateTime startRentTime) {
-        this.startRentTime = startRentTime;
+    public void setStart(LocalDateTime startRentTime) {
+        this.start = startRentTime;
     }
 
-    public LocalDateTime getEndRentTime() {
-        return endRentTime;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
-    public void setEndRentTime(LocalDateTime endRentTime) {
-        this.endRentTime = endRentTime;
+    public void setEnd(LocalDateTime endRentTime) {
+        this.end = endRentTime;
     }
 
     public User getUser() {

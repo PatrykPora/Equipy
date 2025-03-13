@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public class UserAssignmentDto {
 
     private Long id;
-    private LocalDateTime startRentDay;
-    private LocalDateTime endRentDay;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private Long assetId;
     private String assetName;
     private String assetSerialNumber;
@@ -20,20 +20,20 @@ public class UserAssignmentDto {
         this.id = id;
     }
 
-    public LocalDateTime getStartRentDay() {
-        return startRentDay;
+    public LocalDateTime getStart() {
+        return start;
     }
 
-    public void setStartRentDay(LocalDateTime startRentDay) {
-        this.startRentDay = startRentDay;
+    public void setStart(LocalDateTime start) {
+        this.start = start;
     }
 
-    public LocalDateTime getEndRentDay() {
-        return endRentDay;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
-    public void setEndRentDay(LocalDateTime endRentDay) {
-        this.endRentDay = endRentDay;
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 
     public Long getAssetId() {

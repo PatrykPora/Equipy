@@ -8,8 +8,8 @@ public class UserAssignmentMapper {
     static UserAssignmentDto toDto(Assignment assignment) {
         UserAssignmentDto dto = new UserAssignmentDto();
         dto.setId(assignment.getId());
-        dto.setStartRentDay(assignment.getStartRentTime());
-        dto.setEndRentDay(assignment.getEndRentTime());
+        dto.setStart(assignment.getStart());
+        dto.setEnd(assignment.getEnd());
         Asset asset = assignment.getAsset();
         dto.setAssetId(asset.getId());
         dto.setAssetName(asset.getName());

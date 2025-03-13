@@ -22,7 +22,7 @@ values ('Asus MateBook D', '15 calowy laptop, i5, 8GB DDR3, kolor czarny', 'ASMB
         'XHG78K64', 3),
        ('Ford Focus', 'Samochód osobowy, 5 biegowa manualna skrzynia biegów, silnik diesel 1.6', 'M24HP88GYJ', 3);
 
-insert into assignment(start_rent_time, end_rent_time, asset_id, user_id)
+insert into assignment(start, end, asset_id, user_id)
 values ('2017-10-08 15:00:00', '2018-10-08 15:00:00', 1, 1),
        ('2018-10-09 12:00:00', null, 5, 1),
        ('2018-10-10 16:00:00', null, 9, 1);
