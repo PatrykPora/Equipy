@@ -78,4 +78,28 @@ class AssignmentControllerTest {
     }
 
 
+    @Test
+    @DirtiesContext
+    public void shouldReturnAssignment() throws Exception {
+        mockMvc.perform(post("/api/assignments/2/end")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted())
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldNotReturnAssignmentThatHasBeenFinished() throws Exception {
+        mockMvc.perform(post("/api/assignments/1/end")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldNotReturnAssignmentWithWrongId() throws Exception {
+        mockMvc.perform(post("/api/assignments/100/end"))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
 }

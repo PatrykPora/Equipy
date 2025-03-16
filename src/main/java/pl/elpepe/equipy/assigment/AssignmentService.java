@@ -2,6 +2,7 @@ package pl.elpepe.equipy.assigment;
 
 
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.elpepe.equipy.asset.Asset;
 import pl.elpepe.equipy.asset.AssetRepository;
@@ -40,4 +41,17 @@ public class AssignmentService {
         assignment.setStart(LocalDateTime.now());
         return AssignmentMapper.toAssignmentDto(assignmentRepository.save(assignment));
     }
+
+    @Transactional
+    public LocalDateTime finishAssignment(Long assignmentId){
+        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
+        Assignment assignmentEntity = assignment.orElseThrow(AssignmentNotFoundException::new);
+        if (assignmentEntity.getEnd() != null) {
+            throw new AssignmentAlreadyFinishedException();
+        } else {
+            assignmentEntity.setEnd(LocalDateTime.now());
+        }
+        return assignmentEntity.getEnd();
+    }
+
 }
